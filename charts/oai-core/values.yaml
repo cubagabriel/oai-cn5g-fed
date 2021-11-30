@@ -1,0 +1,75 @@
+oai-amf:
+  enabled: true
+  weight: 5
+  nfimage:
+    repository: rdefosseoai/oai-amf
+    version: develop
+  multus:
+    hostInterface: "ens8"
+    routes: 
+      - network: "192.168.69.128/26"
+        gw: "192.168.18.129"
+      - network: "192.168.1.0/29"
+        gw: "192.168.18.129"
+  config:
+    externalAusf: "yes"
+    sst0: "222"
+    sd0: "123"
+    sst1: "111"
+    sd1: "124"
+oai-smf:
+  enabled: true
+  weight: 6
+  nfimage:
+    repository: rdefosseoai/oai-smf
+    version: v1.2.1
+  multus:
+    create: false
+  config:
+    smfInterfaceNameForN4: "eth0"
+    udmFqdn: "oai-udm-svc"
+oai-nrf:
+  enabled: true
+  weight: 1
+  nfimage:
+    version: v1.2.1
+  repository: rdefosseoai/oai-nrf
+oai-spgwu-tiny:
+  enabled: true
+  weight: 7
+  nfimage:
+    repository: rdefosseoai/oai-spgwu-tiny
+    version: v1.1.4
+  config:
+    nssaiSst0: 222
+    nssaiSd0: 123
+  multus:
+    hostInterface: "ens8"
+    routes:
+      - network: "192.168.69.128/26"
+        gw: "192.168.18.129"
+      - network: "192.168.1.0/29"
+        gw: "192.168.18.129"
+      - network: "192.168.70.128/26"
+        gw: "192.168.18.129"
+oai-ausf:
+  enabled: true
+  weight: 4
+  nfimage:
+    version: v1.2.1
+    repository: rdefosseoai/oai-ausf
+oai-udm:
+  enabled: true
+  weight: 3
+  nfimage:
+    version: v1.2.1
+    repository: rdefosseoai/oai-udm
+oai-udr:
+  enabled: true
+  weight: 2
+  nfimage:
+    version: v1.2.1
+    repository: rdefosseoai/oai-udr
+mysql:
+  enabled: true
+  weight: 0

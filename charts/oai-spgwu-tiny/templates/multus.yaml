@@ -16,7 +16,15 @@ spec:
                 {
                         "address": {{- cat .Values.multus.n3Ip "/" .Values.multus.n3Netmask | nospace | quote }}
                 }
+        ],
+        {{- if and .Values.multus.routes }}
+        "routes": [
+                {{- $length := len .Values.multus.routes -}}
+                {{- range $i, $route := .Values.multus.routes }}
+                        { "dst": "{{ $route.network }}", "gw": "{{ $route.gw }}" }{{- if ne $i (sub $length 1) }},{{- end }}
+                {{- end }}
         ]
+        {{- end }}
       }
     }'
 {{- end }}

@@ -17,7 +17,15 @@ spec:
                         "address": {{- cat .Values.multus.n4IPadd "/" .Values.multus.n4Netmask | nospace | quote }},
                         "gateway": {{- cat .Values.config.n4Gw | nospace | quote }}
                 }
+        ],
+        {{- if and .Values.multus.routes }}
+        "routes": [
+                {{- $length := len .Values.multus.routes -}}
+                {{- range $i, $route := .Values.multus.routes }}
+                        { "dst": "{{ $route.network }}", "gw": "{{ $route.gw }}" }{{- if ne $i (sub $length 1) }},{{- end }}
+                {{- end }}
         ]
+        {{- end }}
       }
     }'
 {{- end }}

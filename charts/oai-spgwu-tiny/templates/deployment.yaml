@@ -14,13 +14,14 @@ spec:
   template:
     metadata:
       labels:
+        sidecar.istio.io/inject: "false"
         {{- include "oai-spgwu-tiny.selectorLabels" . | nindent 8 }}
-    {{- if .Values.multus.create }}
       annotations:
+        traffic.sidecar.istio.io/excludeOutboundIPRanges: 0.0.0.0/0
+    {{- if .Values.multus.create }}
         k8s.v1.cni.cncf.io/networks: >-
           [{
-                 "name": "{{ .Chart.Name }}-{{ .Values.namespace }}-n3-net1",
-                 "default-route": ["{{ .Values.multus.sgiGw }}"]
+                 "name": "{{ .Chart.Name }}-{{ .Values.namespace }}-n3-net1"
           }]
     {{- end }}
     spec:

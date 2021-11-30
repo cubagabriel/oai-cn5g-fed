@@ -15,12 +15,12 @@ spec:
     metadata:
       labels:
         {{- include "oai-smf.selectorLabels" . | nindent 8 }}
-    {{- if .Values.multus.create }}
       annotations:
+        traffic.sidecar.istio.io/excludeOutboundIPRanges: 0.0.0.0/0
+    {{- if .Values.multus.create }}
         k8s.v1.cni.cncf.io/networks: >-
           [{
-                 "name": "{{ .Chart.Name }}-{{ .Values.namespace }}-n4-net1",
-                 "default-route": ["{{ .Values.multus.n4Gw }}"]
+                 "name": "{{ .Chart.Name }}-{{ .Values.namespace }}-n4-net1"
           }]
     {{- end }}
     spec:

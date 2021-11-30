@@ -15,6 +15,8 @@ spec:
     metadata:
       labels:
         {{- include "oai-udm.selectorLabels" . | nindent 8 }}
+      annotations:
+        traffic.sidecar.istio.io/excludeOutboundIPRanges: 0.0.0.0/0
     spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -43,6 +45,7 @@ spec:
       - name: udm
         image: "{{ .Values.nfimage.repository }}:{{ .Values.nfimage.version }}"
         imagePullPolicy: {{ .Values.nfimage.pullPolicy }}
+        {{- if .Values.resources.define}}
         resources:
           requests:
             memory: {{ .Values.resources.requests.memory | quote }}

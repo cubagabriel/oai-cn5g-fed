@@ -23,6 +23,7 @@ spec:
   template:
     metadata:
       labels:
+        sidecar.istio.io/inject: "false"
         app: {{ template "mysql.fullname" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
 {{- with .Values.podLabels }}
